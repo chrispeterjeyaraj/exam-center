@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  examfrontend:
+    container_name: exam-frontend
+    image: exam-frontend
+    build:
+      context: .
+      target: development
+    volumes:
+      - ./src:/examcenter/src
+    ports:
+      - 3000:3000

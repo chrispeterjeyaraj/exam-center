@@ -1,0 +1,10 @@
+{
+    "login.quote": "“Develop a passion for learning. If you do, you will never cease to grow.” — Anthony J. D’Angelo",
+    "login.welcome": "Welcome to exam center",
+    "login.username": "Username",
+    "login.password": "Password",
+    "login.signin": "Sign In",
+    "login.required": "kindly fill  the valid credentials..",
+    "login.invalid.credentials": "invalid user creentials ..kindly check your credentials and try again..",
+    "login.nonetwork": "no network available"
+}
