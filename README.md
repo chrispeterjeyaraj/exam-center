@@ -10,16 +10,16 @@ Online Exam App using React and Node
 
 ## Basic commands to run the containers
 
-### UI application
+### FrontEnd application
 ```sh
-cd ui
+cd frontend
 sudo docker compose -f docker-compose.dev.yml up
 in browser -> http://localhost:3000
 ```
 
-### Backend application
+### BackEnd application
 ```sh
-cd ui
+cd backend
 sudo docker compose up
 / or make dev
 in browser -> http://localhost:3000
