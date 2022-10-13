@@ -1,11 +1,43 @@
 version: "3.9"
+
 services:
-    web:
-        build: .
+    examcenterserver:
+        container_name: examcenter-server
+        image: examcenter-server
+        build:
+            context: .
+            target: development
+        volumes:
+            - .:/examcenterserver
+        networks:
+            - mongo-compose-network
+        links:
+            - mongo
         ports:
-            - "4000:4000"
+            - '4000:4000'
+    mongo:
+        image: mongo:4
+        volumes:
+            - ./data:/data/db
+        networks:
+            - mongo-compose-network
+        ports:
+            - '27017:27017'
+    mongo-express:
+        image: mongo-express
         environment:
-            MONGODB_URI: mongodb://127.0.0.1:27017/onlineexam
+            - ME_CONFIG_MONGODB_SERVER=mongo
+            - ME_CONFIG_MONGODB_PORT=27017
+        depends_on:
+            - mongo
+        networks:
+            - mongo-compose-network
+        ports:
+             - '8081:8081'
+        volumes:
+            - ./data:/data/db
 
-
+networks:
+  mongo-compose-network:
+    driver: bridge
 
