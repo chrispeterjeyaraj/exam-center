@@ -20,9 +20,9 @@ in browser -> http://localhost:3000
 ### BackEnd application
 ```sh
 cd backend
-sudo docker compose up
-/ or make dev
-in browser -> http://localhost:3000
+sudo docker compose up [--build]
+api -> http://localhost:4000
+mongo express -> http://localhost:8081
 ```
 ### Database diagram
 ![examcenter-entity-relationship drawio](https://user-images.githubusercontent.com/111428615/195801105-8277fecd-7a2a-40b5-8cde-22ee506f6831.png)
