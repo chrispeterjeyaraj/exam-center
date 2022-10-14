@@ -34,5 +34,20 @@ func AuthUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// TODO : Need to update the user record after login, to update the last login and role if not set
+
+	id, _ := primitive.ObjectIDFromHex(user._id)
+	result, err := collection.UpdateOne(
+		ctx,
+		bson.M{"_id": id},
+		bson.D{
+			{"$set", bson.D{{"lastlogin", Date.now}}},
+			{"$set", bson.D{{"role", "user"}}},
+		},
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	json.NewEncoder(w).Encode(user)
 }
