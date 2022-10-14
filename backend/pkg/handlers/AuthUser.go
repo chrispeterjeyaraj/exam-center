@@ -26,7 +26,7 @@ func AuthUser(w http.ResponseWriter, r *http.Request) {
 	password, _ := params["password"]
 
 	filter := bson.M{"username": username, "password": password}
-	collection := client.Database("examcenter").Collection("user")
+	collection := client.Database("examcenter").Collection("users")
 	err := collection.FindOne(context.TODO(), filter).Decode(&user)
 
 	if err != nil {

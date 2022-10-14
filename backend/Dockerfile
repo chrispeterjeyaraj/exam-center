@@ -1,3 +1,7 @@
+FROM mongo:4
+COPY /db/users.json /users.json
+CMD mongoimport --host mongo --db examcenter --collection users --drop --file /users.json --jsonArray
+
 FROM golang:1.19.2 AS development
 WORKDIR /examcenterserver
 COPY go.mod go.sum ./

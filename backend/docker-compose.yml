@@ -23,6 +23,13 @@ services:
             - mongo-compose-network
         ports:
             - '27017:27017'
+    mongo_seed:
+        container_name: mongo_seed
+        build: .
+        networks:
+            - mongo-compose-network
+        depends_on:
+            - mongo
     mongo-express:
         image: mongo-express
         environment:
