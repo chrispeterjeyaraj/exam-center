@@ -25,4 +25,5 @@ api -> http://localhost:4000
 mongo express -> http://localhost:8081
 ```
 ### Database diagram
-![examcenter-entity-relationship drawio](https://user-images.githubusercontent.com/111428615/195801105-8277fecd-7a2a-40b5-8cde-22ee506f6831.png)
+
+![examcenter-entity-relationship drawio (1)](https://user-images.githubusercontent.com/111428615/195819261-f523fb44-b82f-415b-853e-7b79e280cc30.png)
