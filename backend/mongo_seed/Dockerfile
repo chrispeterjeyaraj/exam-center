@@ -6,6 +6,6 @@ FROM mongo:4
 
  COPY users.json /users.json
 
- CMD mongoimport --uri ${MONGOURI} --collection users --drop --jsonArray --file /users.json
+ CMD mongoimport --uri ${MONGOURI} --collection users --jsonArray --file /users.json
 
 
