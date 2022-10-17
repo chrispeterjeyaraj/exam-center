@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"github.com/chrispeterjeyaraj/exam-center/backend/pkg/controllers"
+	"github.com/chrispeterjeyaraj/exam-center/backend/pkg/controllers/authentication"
 
 	"github.com/gorilla/mux"
 )

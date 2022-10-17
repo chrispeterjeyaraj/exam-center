@@ -1,171 +1,53 @@
 package controllers
 
 import (
-	"context"
+	"encoding/json"
+	"errors"
+	"io"
+	"net/http"
 	"time"
 
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
-	"golang.org/x/crypto/bcrypt"
-
-	"github.com/chrispeterjeyaraj/exam-center/backend/configs"
-	models "github.com/chrispeterjeyaraj/exam-center/backend/pkg/models"
+	database "github.com/chrispeterjeyaraj/exam-center/backend/database"
+	helper "github.com/chrispeterjeyaraj/exam-center/backend/helpers"
+	model "github.com/chrispeterjeyaraj/exam-center/backend/pkg/models"
 )
 
-func HandleDBConnection() (context.Context, *mongo.Client) {
-	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://127.0.0.1:27017"))
-	if err != nil {
-		panic(err)
-	}
-	return ctx, client
-}
+func HandleSignin(response http.ResponseWriter, request *http.Request) {
 
-func HandleDatabaseInsert(DBname string, CollectionName string, email string, phone int, password string, fname string, lname string, uid string, created time.Time, updated time.Time, token string, code int, agent interface{}) bool {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-
-	collection := configs.GetCollection(configs.DB, CollectionName)
-
-	_, errInsert := collection.InsertOne(ctx, bson.M{
-		"email":      email,
-		"phone":      phone,
-		"password":   password,
-		"first_name": fname,
-		"last_name":  lname,
-		"user_id":    uid,
-		"created_at": created,
-		"updated_at": updated,
-		"UserAgent":  agent,
-	})
-
-	HandleInsertToken(DBname, "tokens", token, code, created)
-
-	if errInsert != nil {
-		return false
-	}
-	defer cancel()
-	return true
-
-}
-
-func HandleInsertToken(DBName string, CollectionName string, token string, code int, created time.Time) bool {
-	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
-
-	collectionToken := configs.GetCollection(configs.DB, CollectionName)
-
-	if code != 0 {
-		data := bson.M{"token": token, "code": code, "created_at": created}
-
-		_, errInsert := collectionToken.InsertOne(ctx, data)
-
-		if errInsert != nil {
-			return false
-		}
-	} else if code == 0 {
-		data := bson.M{"token": token, "created_at": created}
-
-		_, errInsert := collectionToken.InsertOne(ctx, data)
-
-		if errInsert != nil {
-			return false
-		}
+	if request.Method != "POST" {
+		response.WriteHeader(http.StatusMethodNotAllowed)
+		response.Write([]byte("{\"message\": \"Method not allowed\"}"))
+		return
 	}
 
-	return true
+	var user model.AuthenticationModel
+	var result model.ResponseModel
 
-}
-
-func HandleAuthentication(email string, password string, DBname string, CollectionName string) (bool, string, string, string, string) {
-
-	var user models.AuthenticationModel
-
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-
-	collection := configs.GetCollection(configs.DB, CollectionName)
-
-	errFind := collection.FindOne(ctx, bson.M{"email": email}).Decode(&user)
-
-	decryptPassword := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
-	if decryptPassword != nil {
-		return false, "", "", "", ""
-	}
-
-	if errFind != nil {
-		return false, "", "", "", ""
-
-	}
-	defer cancel()
-	return true, user.Email, user.First_name, user.Last_name, user.User_id
-}
-
-func HandleTokenAuthentication(DBname string, CollectionName string, token string, code int) bool {
-
-	var result models.ResponseModel
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-
-	collection := configs.GetCollection(configs.DB, CollectionName)
-
-	if code != 0 {
-		errFind := collection.FindOne(ctx, bson.M{"token": token, "code": code}).Decode(&result)
-
-		if errFind != nil {
-			return false
-		}
-	} else if code == 0 {
-		errFind := collection.FindOne(ctx, bson.M{"token": token}).Decode(&result)
-
-		if errFind != nil {
-			return false
-		}
-	}
-
-	defer cancel()
-	return true
-}
-
-func HandleForgotPass(email string, DBName string, CollectionName string) bool {
-	var result models.ResponseModel
-
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-
-	collection := configs.GetCollection(configs.DB, CollectionName)
-
-	errFind := collection.FindOne(ctx, bson.M{"email": email}).Decode(&result)
-
-	if errFind != nil {
-		return false
-	}
-
-	defer cancel()
-	return true
-}
-
-func HandleRemoveCode(DBName string, CollectionName string, code int, token string) bool {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-
-	collection := configs.GetCollection(configs.DB, CollectionName)
-
-	_, err := collection.DeleteOne(ctx, bson.M{"code": code})
-	if err != nil {
-		return false
-	}
-
-	defer cancel()
-	return true
-}
-
-func HandleUpdatePassword(DBName string, CollectionName string, email string, password string) bool {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-
-	collection := configs.GetCollection(configs.DB, CollectionName)
-
-	_, err := collection.UpdateOne(ctx, bson.M{"email": email}, bson.M{"$set": bson.M{"password": password}})
+	dec := json.NewDecoder(request.Body)
+	dec.DisallowUnknownFields()
+	err := dec.Decode(&user)
 
 	if err != nil {
-		return false
+		http.Error(response, err.Error(), http.StatusBadRequest)
+		if errors.Is(err, io.EOF) {
+			response.WriteHeader(http.StatusBadRequest)
+			response.Write([]byte("{\"message\": \"UnAthorized\"}"))
+		}
+		return
 	}
 
-	defer cancel()
-	return true
+	auth, email, fname, lname, userid := database.HandleAuthentication(user.Email, user.Password, "GO", "users")
+	token, _, _ := helper.JWTTokenGenerator(email, fname, lname, userid)
+
+	result.Token = token
+	result.Expires_in = time.Now().Local().Add(time.Hour * time.Duration(24)).Unix()
+
+	if !auth {
+		response.WriteHeader(http.StatusUnauthorized)
+		response.Write([]byte("{\"message\": \"Invalid Credentials\"}"))
+		return
+	} else if auth {
+		response.WriteHeader(http.StatusOK)
+		json.NewEncoder(response).Encode(&result)
+	}
 }
