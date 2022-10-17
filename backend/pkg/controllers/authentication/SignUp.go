@@ -59,12 +59,12 @@ func HandleSignup(response http.ResponseWriter, request *http.Request) {
 	result.Expires_in = time.Now().Local().Add(time.Hour * time.Duration(24)).Unix()
 	generatedCode := helper.HandleCodeGenerator(6)
 	code, _ := strconv.Atoi(generatedCode)
-	insertErr := database.HandleDatabaseInsert("GO", "users", user.Email, user.Phone, user.Password, user.First_name, user.Last_name, user.User_id, user.Created_at, user.Updated_at, user.Token, code, agent)
+	insertErr := database.HandleDatabaseInsert("examcenter", "users", user.Email, user.Phone, user.Password, user.First_name, user.Last_name, user.User_id, user.Created_at, user.Updated_at, user.Token, code, agent)
 
 	if insertErr {
 		response.WriteHeader(http.StatusOK)
 		json.NewEncoder(response).Encode(&result)
-		helper.HandleEmailService(user.Email, code)
+		// helper.HandleEmailService(user.Email, code)
 
 	} else {
 		response.WriteHeader(http.StatusInternalServerError)
