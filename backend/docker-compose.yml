@@ -23,19 +23,19 @@ services:
             - mongo-compose-network
         ports:
             - '27017:27017'
-    mongo_seed:
-        env_file:
-            - .env
-        container_name: mongo_seed
-        build:
-            context: ./mongo_seed
-            dockerfile: Dockerfile
-            args:
-                - DATABASE_URI=$MONGOURI
-        networks:
-            - mongo-compose-network
-        depends_on:
-            - mongo
+    # mongo_seed:
+    #     env_file:
+    #         - .env
+    #     container_name: mongo_seed
+    #     build:
+    #         context: ./mongo_seed
+    #         dockerfile: Dockerfile
+    #         args:
+    #             - DATABASE_URI=$MONGOURI
+    #     networks:
+    #         - mongo-compose-network
+    #     depends_on:
+    #         - mongo
     mongo-express:
         image: mongo-express
         environment:
