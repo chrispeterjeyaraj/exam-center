@@ -3,12 +3,13 @@ package handlers
 import (
 	"context"
 	"encoding/json"
+	"fmt"
+	"log"
 	"net/http"
 
-	"github.com/chrispeterjeyaraj/exam-center/backend/src/db"
-	"github.com/chrispeterjeyaraj/exam-center/backend/src/pkg/models"
 	"github.com/gorilla/mux"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func UpdateUsersExamStatus(w http.ResponseWriter, r *http.Request) {
@@ -24,7 +25,7 @@ func UpdateUsersExamStatus(w http.ResponseWriter, r *http.Request) {
 	collection := client.Database("examcenter").Collection("users")
 	id, _ := primitive.ObjectIDFromHex(userid)
 	result, err := collection.UpdateOne(
-		ctx,
+		context.TODO(),
 		bson.M{"_id": id},
 		bson.D{
 			{"$set", bson.D{{"examtaken", examtaken}}},
