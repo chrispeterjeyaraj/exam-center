@@ -32,11 +32,12 @@ func HandleExamCreate(response http.ResponseWriter, request *http.Request) {
 	exam.Updated_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 	exam.ID = primitive.NewObjectID()
 	exam.Exam_id = exam.ID.Hex()
-	insertErr := database.HandleDatabaseInsert("examcenter", "users", exam.Examname, exam.Category, exam.Status, exam.ExamonwerId, exam.Exam_id, exam.Created_at, exam.Updated_at)
+	insertErr := database.HandleExamsCreate("examcenter", "exams", exam.Examname, exam.Category, exam.Status, exam.ExamonwerId, exam.Exam_id, exam.Created_at, exam.Updated_at)
 
 	if insertErr {
 		response.WriteHeader(http.StatusOK)
-		json.NewEncoder(response).Encode(&result)
+		// json.NewEncoder(response).Encode(&result)
+		response.Write([]byte("{\"message\": \"Exam created successfully\"}"))
 
 	} else {
 		response.WriteHeader(http.StatusInternalServerError)

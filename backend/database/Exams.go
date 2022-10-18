@@ -9,21 +9,19 @@ import (
 	"github.com/chrispeterjeyaraj/exam-center/backend/configs"
 )
 
-func HandleExamsCreate(DBname string, CollectionName string, email string, phone int, password string, fname string, lname string, uid string, created time.Time, updated time.Time, token string, code int, agent interface{}) bool {
+func HandleExamsCreate(DBname string, CollectionName string, examname string, category string, status string, examownerid string, examid string, created time.Time, updated time.Time) bool {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 
 	collection := configs.GetCollection(configs.DB, CollectionName)
 
 	_, errInsert := collection.InsertOne(ctx, bson.M{
-		"email":      email,
-		"phone":      phone,
-		"password":   password,
-		"first_name": fname,
-		"last_name":  lname,
-		"user_id":    uid,
-		"created_at": created,
-		"updated_at": updated,
-		"UserAgent":  agent,
+		"exam_id":     examid,
+		"examname":    examname,
+		"category":    category,
+		"status":      status,
+		"examownerid": examownerid,
+		"created_at":  created,
+		"updated_at":  updated,
 	})
 
 	if errInsert != nil {
@@ -34,12 +32,12 @@ func HandleExamsCreate(DBname string, CollectionName string, email string, phone
 
 }
 
-func HandleUpdateExam(DBName string, CollectionName string, email string, password string) bool {
+func HandleUpdateExam(DBName string, CollectionName string, exam_id string, examname string, category string, status string, updated time.Time) bool {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 
 	collection := configs.GetCollection(configs.DB, CollectionName)
 
-	_, err := collection.UpdateOne(ctx, bson.M{"email": email}, bson.M{"$set": bson.M{"password": password}})
+	_, err := collection.UpdateOne(ctx, bson.M{"exam_id": exam_id}, bson.M{"$set": bson.M{"examname": examname, "category": category, "status": status, "updated_at": updated}})
 
 	if err != nil {
 		return false
