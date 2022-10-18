@@ -28,7 +28,7 @@ func HandleDatabaseInsert(CollectionName string, email string, phone int, passwo
 		"UserAgent":  agent,
 	})
 
-	HandleInsertToken(DBname, "tokens", token, code, created)
+	HandleInsertToken("tokens", token, code, created)
 
 	if errInsert != nil {
 		return false

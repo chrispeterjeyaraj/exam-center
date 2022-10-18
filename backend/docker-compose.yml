@@ -15,6 +15,14 @@ services:
             - mongo
         ports:
             - '4000:4000'
+    # swagger-ui:
+    #     image: swaggerapi/swagger-ui
+    #     ports:
+    #         - 4001:4001
+    #     environment:
+    #         - API_URL
+    #     networks:
+    #         - mongo-compose-network
     mongo:
         image: mongo:4
         volumes:
