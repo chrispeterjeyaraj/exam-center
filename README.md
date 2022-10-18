@@ -1,12 +1,14 @@
 # Exam Center
-Online Exam App using React and Node
+A simple Online Exam Application with the below features 
+* Ability to create exams and questionere as an admin
+* Ability to login as a user to take the exam selecting the desired questionere
+* Reporting for exams taken with results and scores - admin/ user views
 
 ## Tech
 - Docker for creating containers for UI, Server and DB
 - React for user interface and visualization
 - Go for backend APIs
 - Mongo for DB
-- _<will evolve as it goes :) >_
 
 ## Basic commands to run the containers
 
