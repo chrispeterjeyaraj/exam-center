@@ -11,7 +11,7 @@ import (
 	models "github.com/chrispeterjeyaraj/exam-center/backend/pkg/models"
 )
 
-func HandleDatabaseInsert(DBname string, CollectionName string, email string, phone int, password string, fname string, lname string, uid string, created time.Time, updated time.Time, token string, code int, agent interface{}) bool {
+func HandleDatabaseInsert(CollectionName string, email string, phone int, password string, fname string, lname string, uid string, created time.Time, updated time.Time, token string, code int, agent interface{}) bool {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 
 	collection := configs.GetCollection(configs.DB, CollectionName)
@@ -38,7 +38,7 @@ func HandleDatabaseInsert(DBname string, CollectionName string, email string, ph
 
 }
 
-func HandleInsertToken(DBName string, CollectionName string, token string, code int, created time.Time) bool {
+func HandleInsertToken(CollectionName string, token string, code int, created time.Time) bool {
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 
 	collectionToken := configs.GetCollection(configs.DB, CollectionName)
@@ -65,7 +65,7 @@ func HandleInsertToken(DBName string, CollectionName string, token string, code 
 
 }
 
-func HandleAuthentication(email string, password string, DBname string, CollectionName string) (bool, string, string, string, string) {
+func HandleAuthentication(email string, password string, CollectionName string) (bool, string, string, string, string) {
 
 	var user models.AuthenticationModel
 
@@ -88,7 +88,7 @@ func HandleAuthentication(email string, password string, DBname string, Collecti
 	return true, user.Email, user.First_name, user.Last_name, user.User_id
 }
 
-func HandleTokenAuthentication(DBname string, CollectionName string, token string, code int) bool {
+func HandleTokenAuthentication(CollectionName string, token string, code int) bool {
 
 	var result models.ResponseModel
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -113,7 +113,7 @@ func HandleTokenAuthentication(DBname string, CollectionName string, token strin
 	return true
 }
 
-func HandleForgotPass(email string, DBName string, CollectionName string) bool {
+func HandleForgotPass(email string, CollectionName string) bool {
 	var result models.ResponseModel
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -130,7 +130,7 @@ func HandleForgotPass(email string, DBName string, CollectionName string) bool {
 	return true
 }
 
-func HandleRemoveCode(DBName string, CollectionName string, code int, token string) bool {
+func HandleRemoveCode(CollectionName string, code int, token string) bool {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 
 	collection := configs.GetCollection(configs.DB, CollectionName)
@@ -144,7 +144,7 @@ func HandleRemoveCode(DBName string, CollectionName string, code int, token stri
 	return true
 }
 
-func HandleUpdatePassword(DBName string, CollectionName string, email string, password string) bool {
+func HandleUpdatePassword(CollectionName string, email string, password string) bool {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 
 	collection := configs.GetCollection(configs.DB, CollectionName)

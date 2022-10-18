@@ -36,7 +36,7 @@ func HandleSignin(response http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	auth, email, fname, lname, userid := database.HandleAuthentication(user.Email, user.Password, "GO", "users")
+	auth, email, fname, lname, userid := database.HandleAuthentication(user.Email, user.Password, "users")
 	token, _, _ := helper.JWTTokenGenerator(email, fname, lname, userid)
 
 	result.Token = token
