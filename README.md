@@ -1,12 +1,20 @@
 # Exam Center
-Online Exam App using React and Node
+**A simple Online Exam Application with the below features**
+* Ability to create exams and questionere as an admin
+* Ability to login as a user to take the exam selecting the desired questionere
+* Reporting for exams taken with results and scores - admin/ user views
+
+[![Go](https://github.com/chrispeterjeyaraj/exam-center/actions/workflows/go.yml/badge.svg)](https://github.com/chrispeterjeyaraj/exam-center/actions/workflows/go.yml)[![Node.js CI](https://github.com/chrispeterjeyaraj/exam-center/actions/workflows/node.js.yml/badge.svg)](https://github.com/chrispeterjeyaraj/exam-center/actions/workflows/node.js.yml)[![Docker Image Backend CI](https://github.com/chrispeterjeyaraj/exam-center/actions/workflows/docker-image-backend.yml/badge.svg)](https://github.com/chrispeterjeyaraj/exam-center/actions/workflows/docker-image-backend.yml)[![Docker Image FrontEnd CI](https://github.com/chrispeterjeyaraj/exam-center/actions/workflows/docker-image-frontend.yml/badge.svg)](https://github.com/chrispeterjeyaraj/exam-center/actions/workflows/docker-image-frontend.yml)
+
+[Tech Stack](#Tech) |
+[Basic commands](#Basic-commands-to-run-the-containers) |
+[Database diagram](#Database-diagram)
 
 ## Tech
 - Docker for creating containers for UI, Server and DB
 - React for user interface and visualization
 - Go for backend APIs
 - Mongo for DB
-- _<will evolve as it goes :) >_
 
 ## Basic commands to run the containers
 
