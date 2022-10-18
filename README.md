@@ -4,6 +4,8 @@
 * Ability to login as a user to take the exam selecting the desired questionere
 * Reporting for exams taken with results and scores - admin/ user views
 
+[![Go](https://github.com/chrispeterjeyaraj/exam-center/actions/workflows/go.yml/badge.svg)](https://github.com/chrispeterjeyaraj/exam-center/actions/workflows/go.yml)[![Node.js CI](https://github.com/chrispeterjeyaraj/exam-center/actions/workflows/node.js.yml/badge.svg)](https://github.com/chrispeterjeyaraj/exam-center/actions/workflows/node.js.yml)
+
 [Tech Stack](#Tech) |
 [Basic commands](#Basic-commands-to-run-the-containers) |
 [Database diagram](#Database-diagram)
