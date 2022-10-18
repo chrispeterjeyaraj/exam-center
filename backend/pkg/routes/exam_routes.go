@@ -7,6 +7,9 @@ import (
 )
 
 func ExamRoute(router *mux.Router) {
-	router.HandleFunc("/createexam", controllers.HandleExamsCreate)
-	// router.HandleFunc("/updateexam", controllers.HandleExamsUpdate)
+	router.HandleFunc("/createexam", controllers.HandleExamCreate)
+	router.HandleFunc("/updateexam", controllers.HandleExamsUpdate)
+	router.HandleFunc("/deleteexam/{examId}", controllers.HandleDeleteExam)
+	router.HandleFunc("/getallexams", controllers.GetAllExams)
+	router.HandleFunc("/getexam/{examId}", controllers.GetAnExam)
 }

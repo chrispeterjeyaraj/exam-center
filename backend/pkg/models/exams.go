@@ -16,3 +16,11 @@ type Exam struct {
 	Created_at  time.Time          `json:"created_at"`
 	Updated_at  time.Time          `json:"updated_at"`
 }
+
+type ExamView struct {
+	Exam_id     string `json:"exam_id"`
+	Examname    string `json:"examname"`
+	Category    string `json:"category"`
+	Status      string `json:"status"`
+	ExamonwerId string `json:"examownerid"`
+}

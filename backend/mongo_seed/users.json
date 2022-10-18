@@ -1,14 +1,12 @@
 [{
-    "Username": "admin",
-	"Password": "admin",
-	"Lastlogin": "",
-	"Examstaken": "",
-	"Role": ""
+    "First_name": "Chris",
+    "Last_name": "Peter",
+    "Email": "mailtochrisnow@gmail.com",
+    "Password": "chris"
 },
 {
-    "Username": "chris",
-	"Password": "chris",
-	"Lastlogin": "",
-	"Examstaken": "",
-	"Role": ""
+    "First_name": "Chris",
+    "Last_name": "Peter",
+    "Email": "admin@examcenter.com",
+    "Password": "admin"
 }]
