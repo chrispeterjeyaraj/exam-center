@@ -3,9 +3,11 @@
 * Ability to create exams and questionere as an admin
 * Ability to login as a user to take the exam selecting the desired questionere
 * Reporting for exams taken with results and scores - admin/ user views
+
 [Tech](#Tech) |
 [Basic commands](#Basic commands to run the containers) |
 [Database diagram](#Database diagram)
+
 ## Tech
 - Docker for creating containers for UI, Server and DB
 - React for user interface and visualization
