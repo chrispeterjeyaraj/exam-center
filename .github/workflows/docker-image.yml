@@ -15,12 +15,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build the Exam Center Backend Docker image
-        run: docker build . --file ./backend/Dockerfile --tag exam-center-backend:$(date +%s)
+        run: docker build --file ./backend/Dockerfile --tag exam-center-backend:$(date +%s)
 
       - uses: actions/checkout@v3
       - name: Build the Exam Center FrontEnd Docker image
-        run: docker build . --file ./frontend/Dockerfile --tag exam-center-frontend:$(date +%s)
+        run: docker build --file ./frontend/Dockerfile --tag exam-center-frontend:$(date +%s)
 
       - uses: actions/checkout@v3
       - name: Build the Exam Center CORS Docker image
-        run: docker build . --file ./backend/nginx/Dockerfile --tag exam-center-cors:$(date +%s)
+        run: docker build --file ./backend/nginx/Dockerfile --tag exam-center-cors:$(date +%s)
