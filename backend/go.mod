@@ -6,14 +6,10 @@ require go.mongodb.org/mongo-driver v1.10.3
 
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
-	github.com/gorilla/handlers v1.5.1
 	github.com/gorilla/mux v1.8.0
 )
 
-require (
-	github.com/felixge/httpsnoop v1.0.3 // indirect
-	github.com/stretchr/testify v1.7.0 // indirect
-)
+require github.com/stretchr/testify v1.7.0 // indirect
 
 require (
 	github.com/avct/uasurfer v0.0.0-20191028135549-26b5daa857f1
