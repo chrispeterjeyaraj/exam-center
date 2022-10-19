@@ -1,4 +1,4 @@
-name: Docker Image Backend CI
+name: Exam Center Docker CI
 
 on:
   push:
@@ -14,5 +14,5 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: cd backend && docker build . --file Dockerfile --tag exam-center-backend:$(date +%s)
+    - name: Build the Exam Center Docker image
+      run: docker build . --file Dockerfile --tag exam-center:$(date +%s)

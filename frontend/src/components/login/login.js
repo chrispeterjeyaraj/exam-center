@@ -19,9 +19,9 @@ const Login = () => {
     if (!email || !password) {
       alert(t("login.required"));
     } else {
-      fetchData("fetchUser", "POST", {
-        email,
-        password,
+      fetchData("signin", "POST", {
+        "Email": email,
+        "Password": password,
       })
         .then((data) => data.json())
         .then((data) => {
