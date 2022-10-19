@@ -22,7 +22,7 @@ RUN npm install --production
 # Copy app files
 COPY . .
 # Build the app
-RUN npm build
+RUN npm run build
 
 # Bundle static assets with nginx
 FROM nginx:1.23.0-alpine as production
