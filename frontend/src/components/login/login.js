@@ -5,35 +5,35 @@ import { fetchData } from "../../helpers/api";
 import "./login.css";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { translation } = useTranslation();
+  const { t } = useTranslation();
   const handleInputChange = (e) => {
-    setUsername(e.target.value);
+    setEmail(e.target.value);
   };
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
   const navigate = useNavigate();
   const loginUser = () => {
-    if (!username || !password) {
-      alert(translation("login.required"));
+    if (!email || !password) {
+      alert(t("login.required"));
     } else {
       fetchData("fetchUser", "POST", {
-        username,
+        email,
         password,
       })
         .then((data) => data.json())
         .then((data) => {
           console.log("user received is", data);
-          if (data.status == "invalid") {
-            alert(translation("login.invalid.credentials"));
+          if (data.status === "invalid") {
+            alert(t("login.invalid.credentials"));
           } else {
             localStorage.setItem("sessionId", data.sessionId);
             navigate(`/exams`);
           }
         })
-        .catch((err) => alert(translation("login.nonetwork"), err));
+        .catch((err) => alert(t("login.nonetwork"), err));
     }
   };
 
@@ -41,21 +41,21 @@ const Login = () => {
     <>
       <div className="cont">
         <div className="form sign-in">
-          <h2>{translation("login.welcome")}</h2>
+          <h2>{t("login.welcome")}</h2>
           <label>
-            <span>{translation("login.username")}</span>
+            <span>{t("login.email")}</span>
             <input type="text" onChange={handleInputChange} />
           </label>
           <label>
-            <span>{translation("login.password")}</span>
+            <span>{t("login.password")}</span>
             <input type="password" onChange={handlePasswordChange} />
           </label>
-          <button type="button" className="submit" onClick={loginUser}></button>
+          <button type="button" className="submit" onClick={loginUser}>{t("login.signin")}</button>
         </div>
         <div className="sub-cont">
           <div className="img">
             <div className="img__text m--up">
-              <p>{translation("login.quote")}</p>
+              <p>{t("login.quote")}</p>
             </div>
           </div>
         </div>

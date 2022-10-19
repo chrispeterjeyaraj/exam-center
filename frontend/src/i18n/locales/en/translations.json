@@ -2,6 +2,7 @@
     "login.quote": "“Develop a passion for learning. If you do, you will never cease to grow.” — Anthony J. D’Angelo",
     "login.welcome": "Welcome to exam center",
     "login.username": "Username",
+    "login.email": "Email",
     "login.password": "Password",
     "login.signin": "Sign In",
     "login.required": "kindly fill  the valid credentials..",
