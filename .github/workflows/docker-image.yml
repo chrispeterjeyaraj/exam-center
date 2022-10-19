@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Exam Center Docker image
-      run: docker build . --file Dockerfile --tag exam-center:$(date +%s)
+      run: docker build . --tag exam-center:$(date +%s)
