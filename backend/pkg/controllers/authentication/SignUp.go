@@ -63,13 +63,12 @@ func HandleSignup(response http.ResponseWriter, request *http.Request) {
 
 	if insertErr {
 		response.WriteHeader(http.StatusOK)
-		// json.NewEncoder(response).Encode(&result)
 		// helper.HandleEmailService(user.Email, code)
 		response.Write([]byte("{\"Status\": \"Success\", \"message\": \"Request Completed\"}"))
 
 	} else {
 		response.WriteHeader(http.StatusInternalServerError)
-		response.Write([]byte("{\"message\": \"Duplicate Data\"}"))
+		response.Write([]byte("{\"Status\": \"Failed\", \"message\": \"Could not complete registration\"}"))
 		return
 	}
 

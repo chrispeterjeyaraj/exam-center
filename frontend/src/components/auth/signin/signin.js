@@ -15,9 +15,6 @@ const SignIn = () => {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
-  // const handleSignUpClick = (e) => {
-  //   navigate(`/signup`);
-  // }
 
   const navigate = useNavigate();
   const loginUser = () => {
@@ -30,11 +27,10 @@ const SignIn = () => {
       })
         .then((data) => data.json())
         .then((data) => {
-          console.log("user received is", data);
-          if (data.status === "invalid") {
+          if (data.Status === "Failed") {
             alert(t("login.invalid.credentials"));
           } else {
-            localStorage.setItem("sessionId", data.sessionId);
+            localStorage.setItem("token", data.Token);
             navigate(`/exams`);
           }
         })

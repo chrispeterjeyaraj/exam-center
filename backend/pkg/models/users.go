@@ -36,6 +36,7 @@ type Error struct {
 }
 
 type ResponseModel struct {
+	Status     string `json:"status"`
 	Token      string `json:"token"`
 	Expires_in int64  `json:"expires_in"`
 }

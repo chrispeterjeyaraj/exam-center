@@ -31,7 +31,7 @@ func HandleSignin(response http.ResponseWriter, request *http.Request) {
 		http.Error(response, err.Error(), http.StatusBadRequest)
 		if errors.Is(err, io.EOF) {
 			response.WriteHeader(http.StatusBadRequest)
-			response.Write([]byte("{\"message\": \"UnAthorized\"}"))
+			response.Write([]byte("{\"message\": \"Unauthorized\"}"))
 		}
 		return
 	}
@@ -43,10 +43,12 @@ func HandleSignin(response http.ResponseWriter, request *http.Request) {
 	result.Expires_in = time.Now().Local().Add(time.Hour * time.Duration(24)).Unix()
 
 	if !auth {
+		result.Status = "Failed";
 		response.WriteHeader(http.StatusUnauthorized)
-		response.Write([]byte("{\"message\": \"Invalid Credentials\"}"))
+		response.Write([]byte("{\"Status\": \"Failed\", \"message\": \"Invalid Credentials\"}"))
 		return
 	} else if auth {
+		result.Status = "Success";
 		response.WriteHeader(http.StatusOK)
 		json.NewEncoder(response).Encode(&result)
 	}
