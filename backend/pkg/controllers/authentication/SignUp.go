@@ -63,8 +63,9 @@ func HandleSignup(response http.ResponseWriter, request *http.Request) {
 
 	if insertErr {
 		response.WriteHeader(http.StatusOK)
-		json.NewEncoder(response).Encode(&result)
+		// json.NewEncoder(response).Encode(&result)
 		// helper.HandleEmailService(user.Email, code)
+		response.Write([]byte("{\"Status\": \"Success\", \"message\": \"Request Completed\"}"))
 
 	} else {
 		response.WriteHeader(http.StatusInternalServerError)

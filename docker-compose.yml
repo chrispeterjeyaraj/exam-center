@@ -15,8 +15,9 @@ services:
         build:
             context: ./frontend
             target: development
+        stdin_open: true
         volumes:
-            - ./frontend/src:/examcenter/src
+             - ./frontend/src:/examcenterfrontend/src
         networks:
             - examcenter-compose-network
         links:
