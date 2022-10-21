@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Login from './components/login/login';
+import SignIn from './components/auth/signin/signin';
+import SignUp from './components/auth/signup/signup';
 import { Routes, Route } from 'react-router-dom'
 import { Exams } from './components/exams/examcenter';
 import { Result } from './components/result/result';
@@ -10,7 +11,8 @@ class App extends Component {
       <div>
         <Routes>
           <Route path="/exams" element=<Exams /> />
-          <Route path="" element=<Login/> />
+          <Route path="" element=<SignIn /> />
+          <Route path="/signup" element=<SignUp/> />
           <Route path="result" element=<Result /> />
         </Routes>
       </div>
