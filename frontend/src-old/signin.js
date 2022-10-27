@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { fetchData } from "../../../helpers/api";
-import "./signin.css";
+import { useAuth } from "../../../hooks/useAuth";
+import "../../../shared-styles.css";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -16,25 +16,12 @@ const SignIn = () => {
     setPassword(e.target.value);
   };
 
-  const navigate = useNavigate();
+  const auth = useAuth();
   const loginUser = () => {
     if (!email || !password) {
       alert(t("login.required"));
     } else {
-      fetchData("signin", "POST", {
-        "Email": email,
-        "Password": password,
-      })
-        .then((data) => data.json())
-        .then((data) => {
-          if (data.Status === "Failed") {
-            alert(t("login.invalid.credentials"));
-          } else {
-            localStorage.setItem("token", data.Token);
-            navigate(`/exams`);
-          }
-        })
-        .catch((err) => alert(t("login.nonetwork"), err));
+      auth.login({ email: email, password: password });
     }
   };
 

@@ -1,23 +1,35 @@
-import React, { Component } from 'react';
-import SignIn from './components/auth/signin/signin';
-import SignUp from './components/auth/signup/signup';
-import { Routes, Route } from 'react-router-dom'
-import { Exams } from './components/exams/examcenter';
-import { Result } from './components/result/result';
+import {lazy, Suspense} from 'react';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route
+} from 'react-router-dom';
+import { useSelector } from 'react-redux'
+import './App.scss';
+import routes from './routes/routes';
+import ProtectedRoutes from './routes/ProtectedRoutes';
 
-class App extends Component {
-  render() {
-    return (
-      <div>
+const LoginPage = lazy(() => import('./features/OnBoarding/LoginPage'));
+
+function App() {
+  //Getting isAuthenticated store value from Authentication slice.
+  const isAuthenticated = useSelector((state) => state.authentication.isAuthenticated)
+  console.log('app', isAuthenticated)
+  return (
+    <Router>
+      <Suspense fallback={<div>Loading...</div>}>
         <Routes>
-          <Route path="/exams" element=<Exams /> />
-          <Route path="" element=<SignIn /> />
-          <Route path="/signup" element=<SignUp/> />
-          <Route path="result" element=<Result /> />
-        </Routes>
-      </div>
-    );
-  }
+            {/* <Route path="*" element={<NotFoundPage />} /> */}
+              <Route path="/" element={<LoginPage />} />
+              <Route element={<ProtectedRoutes isAuthenticated={isAuthenticated} />}>
+                {routes.map(({component: Component, path, exact}, index) => (
+                  <Route path={`/${path}`} key={index} exact={exact} element={<Component />}/>
+                ))}
+              </Route>
+          </Routes>
+        </Suspense>
+  </Router>
+  );
 }
 
 export default App;

@@ -5,7 +5,8 @@
     "login.username": "Username",
     "login.email": "Email",
     "login.password": "Password",
-    "login.signin": "Sign In",
+    "login.signin": "Submit",
+    "login.rememberme": "Remember Me",
     "login.signin.signup": "Not a member yet ? Sign Up",
 
     "login.signup.welcome": "Sign Up",
